@@ -1,4 +1,5 @@
-import { AuthContextProvider } from "./firebase/auth"; // Correct import path based on the updated folder structure
+// src/app/layout.js
+import { AuthContextProvider } from "./firebase/auth";  // Corrected import path
 import localFont from "next/font/local";
 import "./globals.css";
 

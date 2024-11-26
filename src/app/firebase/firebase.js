@@ -1,4 +1,3 @@
-// src/firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
@@ -22,4 +21,13 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
-export { auth, googleProvider, githubProvider, signInWithPopup, signOut };
+// Helper function for Google sign-in
+const googleSignIn = () => signInWithPopup(auth, googleProvider);
+
+// Helper function for GitHub sign-in
+const gitHubSignIn = () => signInWithPopup(auth, githubProvider);
+
+// Sign-out function
+const firebaseSignOut = () => signOut(auth);
+
+export { auth, googleSignIn, gitHubSignIn, firebaseSignOut };
