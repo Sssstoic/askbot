@@ -1,3 +1,4 @@
+import { AuthContextProvider } from "../firebase/auth"; // Correct import path
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -23,7 +24,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* Wrap children with AuthContextProvider */}
+        <AuthContextProvider>
+          {children}
+        </AuthContextProvider>
       </body>
     </html>
   );
