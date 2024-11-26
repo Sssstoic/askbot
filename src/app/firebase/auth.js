@@ -1,9 +1,9 @@
-// src/auth.js
 "use client";
 
 import { useContext, createContext, useState, useEffect } from "react";
 import { signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
-import { auth } from "./firebase";
+// Updated import path to reflect the new location of firebase.js inside app/firebase
+import { auth } from "./firebase"; // <-- Corrected path here
 
 const AuthContext = createContext();
 

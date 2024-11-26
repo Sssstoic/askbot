@@ -1,12 +1,14 @@
-import { AuthContextProvider } from "./firebase/auth"; // Correct import path
+import { AuthContextProvider } from "./firebase/auth"; // Correct import path based on the updated folder structure
 import localFont from "next/font/local";
 import "./globals.css";
 
+// Load custom fonts
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",

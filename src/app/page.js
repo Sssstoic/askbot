@@ -1,7 +1,7 @@
 "use client";
 
-import { useUserAuth } from "./firebase/auth"; 
-import { useRouter } from "next/navigation"; 
+import { useUserAuth } from "./firebase/auth"; // Updated import path for useUserAuth
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const LoginPage = () => {
