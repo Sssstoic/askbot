@@ -18,7 +18,7 @@ const HomePage = () => {
   useEffect(() => {
     setIsClient(true);
     document.documentElement.classList.add("dark");
-    localStorage.setItem("theme", "dark"); 
+    localStorage.setItem("theme", "dark");
   }, []);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const HomePage = () => {
   const handleQuestionSubmit = async (e) => {
     e.preventDefault();
     if (!question.trim()) return;
-  
+
     const newUserMessage = {
       role: "user",
       content: question,
@@ -48,32 +48,26 @@ const HomePage = () => {
     setMessages((prevMessages) => [...prevMessages, newUserMessage]);
     setQuestion("");
     setLoading(true);
-  
+
     try {
-      // Direct API call to OpenAI using the new gpt-3.5-turbo model
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      // Call the Next.js API route instead of OpenAI API directly
+      const response = await fetch("/api", { // Call to your API route
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`, // Ensure the API key is correct
         },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo", // Updated model
-          messages: [{ role: "user", content: question }],
-          max_tokens: 150, // Optional, limit the response length
-          temperature: 0.7, // Optional, control the randomness of the output
-        }),
+        body: JSON.stringify({ question }), // Send the question to your API
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("OpenAI API error:", errorText);
+        console.error("API error:", errorText);
         throw new Error("Failed to fetch from API");
       }
-  
+
       const data = await response.json();
-      const message = data.choices[0].message.content.trim(); // 'message' for gpt-3.5-turbo model
-  
+      const message = data.choices[0].message.content.trim();
+
       // Add the bot's response to the chat
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -84,7 +78,7 @@ const HomePage = () => {
       console.error("Error fetching from API:", error.message || error);
       setLoading(false);
     }
-  };  
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
