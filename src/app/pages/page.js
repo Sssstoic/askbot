@@ -50,13 +50,12 @@ const HomePage = () => {
     setLoading(true);
 
     try {
-      // Call the Next.js API route instead of OpenAI API directly
-      const response = await fetch("/api", { // Call to your API route
+      const response = await fetch("/api", { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ question }), // Send the question to your API
+        body: JSON.stringify({ question }), 
       });
 
       if (!response.ok) {
@@ -68,7 +67,6 @@ const HomePage = () => {
       const data = await response.json();
       const message = data.choices[0].message.content.trim();
 
-      // Add the bot's response to the chat
       setMessages((prevMessages) => [
         ...prevMessages,
         { content: message, role: "bot" },
