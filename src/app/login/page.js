@@ -1,38 +1,24 @@
 "use client";
 
 import { useUserAuth } from "../firebase/auth"; // Correct import path to your custom auth context
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const LoginPage = () => {
-  const { googleSignIn, gitHubSignIn, firebaseSignOut, user } = useUserAuth();  // Using the context for auth functions
+  const { googleSignIn, gitHubSignIn, firebaseSignOut, user } = useUserAuth();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);  // Loading state
-  const [error, setError] = useState(null);  // Error state
+  const [loading, setLoading] = useState(false); // Loading state
+  const [error, setError] = useState(null); // Error state (no type annotations)
 
-  const handleGoogleSignIn = async () => {
-    setLoading(true); // Start loading
+  const handleSignIn = async (signInMethod, signInProvider) => {
+    setLoading(true);
     setError(null); // Clear previous errors
     try {
-      await googleSignIn();
+      await signInMethod();
       router.push("/pages"); // Redirect after successful login to /pages
     } catch (error) {
-      console.error("Google Sign-In error:", error);
-      setError("Failed to sign in with Google. Please try again."); // Set error message
-    } finally {
-      setLoading(false); // Stop loading
-    }
-  };
-
-  const handleGitHubSignIn = async () => {
-    setLoading(true); // Start loading
-    setError(null); // Clear previous errors
-    try {
-      await gitHubSignIn();
-      router.push("/pages"); // Redirect after successful login to /pages
-    } catch (error) {
-      console.error("GitHub Sign-In error:", error);
-      setError("Failed to sign in with GitHub. Please try again."); // Set error message
+      console.error(`${signInProvider} Sign-In error:`, error);
+      setError(`Failed to sign in with ${signInProvider}. Please try again.`); // Set error message
     } finally {
       setLoading(false); // Stop loading
     }
@@ -41,6 +27,10 @@ const LoginPage = () => {
   const handleSignOut = async () => {
     await firebaseSignOut();
     router.push("/"); // Redirect to login page after sign-out
+  };
+
+  const handleContinueWithoutLogin = () => {
+    router.push("/pages"); // Redirect directly to /pages without logging in
   };
 
   return (
@@ -61,19 +51,28 @@ const LoginPage = () => {
             </div>
           )}
           <button
-            onClick={handleGoogleSignIn}
+            onClick={() => handleSignIn(googleSignIn, "Google")}
             disabled={loading}  // Disable when loading
             className="w-full bg-red-500 text-white p-3 rounded-md hover:bg-red-600 focus:ring-2 focus:ring-red-800 mb-4"
           >
             {loading ? "Signing in with Google..." : "Sign in with Google"}
           </button>
           <button
-            onClick={handleGitHubSignIn}
+            onClick={() => handleSignIn(gitHubSignIn, "GitHub")}
             disabled={loading}  // Disable when loading
             className="w-full bg-gray-800 text-white p-3 rounded-md hover:bg-gray-900 focus:ring-2 focus:ring-gray-800 mb-4"
           >
             {loading ? "Signing in with GitHub..." : "Sign in with GitHub"}
           </button>
+
+          {/* Continue without logging in */}
+          <button
+            onClick={handleContinueWithoutLogin}
+            className="w-full bg-transparent text-gray-700 p-3 rounded-md border border-gray-300 hover:bg-gray-100 focus:ring-2 focus:ring-gray-500 mb-4"
+          >
+            Continue without logging in
+          </button>
+
           {user && (
             <button
               onClick={handleSignOut}
