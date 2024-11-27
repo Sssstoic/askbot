@@ -1,36 +1,36 @@
 "use client";
 
-import { useUserAuth } from "../firebase/auth"; // Correct import path to your custom auth context
+import { useUserAuth } from "../firebase/auth"; 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const LoginPage = () => {
   const { googleSignIn, gitHubSignIn, firebaseSignOut, user } = useUserAuth();
   const router = useRouter();
-  const [loading, setLoading] = useState(false); // Loading state
-  const [error, setError] = useState(null); // Error state (no type annotations)
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(null);
 
   const handleSignIn = async (signInMethod, signInProvider) => {
     setLoading(true);
-    setError(null); // Clear previous errors
+    setError(null); 
     try {
       await signInMethod();
-      router.push("/pages"); // Redirect after successful login to /pages
+      router.push("/pages"); 
     } catch (error) {
       console.error(`${signInProvider} Sign-In error:`, error);
-      setError(`Failed to sign in with ${signInProvider}. Please try again.`); // Set error message
+      setError(`Failed to sign in with ${signInProvider}. Please try again.`); 
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false); 
     }
   };
 
   const handleSignOut = async () => {
     await firebaseSignOut();
-    router.push("/"); // Redirect to login page after sign-out
+    router.push("/"); 
   };
 
   const handleContinueWithoutLogin = () => {
-    router.push("/pages"); // Redirect directly to /pages without logging in
+    router.push("/pages"); 
   };
 
   return (
@@ -47,25 +47,24 @@ const LoginPage = () => {
           <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-4">Login</h2>
           {error && (
             <div className="bg-red-100 text-red-800 p-2 rounded-md mb-4">
-              {error}  {/* Display error message */}
+              {error}  
             </div>
           )}
           <button
             onClick={() => handleSignIn(googleSignIn, "Google")}
-            disabled={loading}  // Disable when loading
+            disabled={loading}  
             className="w-full bg-red-500 text-white p-3 rounded-md hover:bg-red-600 focus:ring-2 focus:ring-red-800 mb-4"
           >
             {loading ? "Signing in with Google..." : "Sign in with Google"}
           </button>
           <button
             onClick={() => handleSignIn(gitHubSignIn, "GitHub")}
-            disabled={loading}  // Disable when loading
+            disabled={loading}  
             className="w-full bg-gray-800 text-white p-3 rounded-md hover:bg-gray-900 focus:ring-2 focus:ring-gray-800 mb-4"
           >
             {loading ? "Signing in with GitHub..." : "Sign in with GitHub"}
           </button>
 
-          {/* Continue without logging in */}
           <button
             onClick={handleContinueWithoutLogin}
             className="w-full bg-transparent text-gray-700 p-3 rounded-md border border-gray-300 hover:bg-gray-100 focus:ring-2 focus:ring-gray-500 mb-4"
