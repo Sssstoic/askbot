@@ -1,9 +1,7 @@
-// src/app/layout.js
-import { AuthContextProvider } from "./firebase/auth";  // Corrected import path
+import { AuthContextProvider } from "./firebase/auth";
 import localFont from "next/font/local";
 import "./globals.css";
 
-// Load custom fonts
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -27,7 +25,6 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Wrap children with AuthContextProvider */}
         <AuthContextProvider>
           {children}
         </AuthContextProvider>
