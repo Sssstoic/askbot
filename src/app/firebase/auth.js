@@ -2,8 +2,7 @@
 
 import { useContext, createContext, useState, useEffect } from "react";
 import { signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
-// Updated import path to reflect the new location of firebase.js inside app/firebase
-import { auth } from "./firebase"; // <-- Corrected path here
+import { auth } from "./firebase"; 
 
 const AuthContext = createContext();
 
@@ -29,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
       setUser(currentUser);
     });
     return () => unsubscribe();
-  }, []); // Only runs once when the component mounts
+  }, []); 
 
   return (
     <AuthContext.Provider value={{ user, googleSignIn, gitHubSignIn, firebaseSignOut }}>
