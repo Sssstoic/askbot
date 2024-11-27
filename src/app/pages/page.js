@@ -37,6 +37,11 @@ const HomePage = () => {
     });
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem("auth_token"); 
+    router.push("/login"); 
+  };
+
   const handleQuestionSubmit = async (e) => {
     e.preventDefault();
     if (!question.trim()) return;
@@ -96,6 +101,13 @@ const HomePage = () => {
             ) : (
               <MoonIcon className="h-6 w-6 text-gray-500" />
             )}
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="p-2 rounded-full bg-red-500 text-white hover:bg-red-600"
+            aria-label="Sign Out"
+          >
+            Sign Out
           </button>
         </div>
       </header>
