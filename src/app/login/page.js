@@ -85,6 +85,7 @@ const LoginPage = () => {
 
       <footer className="bg-green-900 dark:bg-green-800 p-4 text-white text-center text-sm">
         &copy; 2024 AskBot. All rights reserved.
+        <p className="text-xs mt-2">Created by James Tuling</p>
       </footer>
     </div>
   );
