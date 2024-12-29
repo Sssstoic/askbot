@@ -2,7 +2,7 @@
 
 import LoginPage from "./login/page";
 const HomePage = () => {
-  return <LoginPage />; // Render the LoginPage component directly
+  return <LoginPage />;
 };
 
 export default HomePage;
